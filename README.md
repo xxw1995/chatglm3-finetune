@@ -10,3 +10,9 @@ python tokenize_dataset_rows.py  --jsonl_path ./alpaca_data.jsonl --save_path ./
 
 ## finetune
 python finetune.py --dataset_path data/alpaca --lora_rank 8 --per_device_train_batch_size 1 --gradient_accumulation_steps 1 --max_steps 52000 --save_steps 1000 --save_total_limit 20 --learning_rate 1e-4 --remove_unused_columns false --logging_steps 50 --output_dir output 
+
+
+
+
+## 感谢
+inspired by https://github.com/mymusise/ChatGLM-Tuning
