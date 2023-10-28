@@ -9,4 +9,4 @@ accelerate
 sse-starlette
 streamlit>=1.24.0
 git+https://github.com/huggingface/peft.git
-pip install fsspec==2023.9.2
+fsspec==2023.9.2
