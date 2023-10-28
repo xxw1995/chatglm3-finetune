@@ -25,13 +25,10 @@ def read_jsonl(path, max_seq_length, skip_overlength=False):
     with open(path, "r") as f:
         for line in tqdm(f.readlines()):
             example = json.loads(line)
-            # 一个字典：{"input_ids": input_ids, "seq_len": len(prompt_ids)}
             feature = preprocess(tokenizer, config, example, max_seq_length)
             if skip_overlength and len(feature["input_ids"]) > max_seq_length:
                 continue
-            # 截短长度
             feature["input_ids"] = feature["input_ids"][:max_seq_length]
-            # 返回一个feature
             yield feature
 
 def main():
