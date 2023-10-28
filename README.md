@@ -16,3 +16,5 @@ python finetune.py --dataset_path data/alpaca --lora_rank 8 --per_device_train_b
 
 ## 感谢
 inspired by https://github.com/mymusise/ChatGLM-Tuning
+inspired by https://github.com/THUDM/ChatGLM3
+
