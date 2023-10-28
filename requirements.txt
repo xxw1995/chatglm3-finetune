@@ -11,3 +11,4 @@ streamlit>=1.24.0
 git+https://github.com/huggingface/peft.git
 fsspec==2023.9.2
 datasets==2.10.1
+modelscope
