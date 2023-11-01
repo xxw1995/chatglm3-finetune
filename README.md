@@ -19,6 +19,7 @@ python infer.py output/checkpoint-1000 ./alpaca_data.json 100
 
 
 ## 感谢
-inspired by https://github.com/mymusise/ChatGLM-Tuning  
-inspired by https://github.com/THUDM/ChatGLM3  
+https://github.com/mymusise/ChatGLM-Tuning  
+https://github.com/THUDM/ChatGLM3  
+https://github.com/minghaochen/chatglm3-base-tuning
 
