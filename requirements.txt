@@ -13,4 +13,8 @@ fsspec==2023.9.2
 datasets==2.10.1
 modelscope
 bitsandbytes
-accelerate
+openai
+langchain
+pypdf
+python-docx
+faiss-gpu
