@@ -1,6 +1,8 @@
 # chatglm3-finetune
-最容易上手的0门槛chatglm3项目，将会支持基于langchain的agent调用  
-注意，model_32K版本需要特殊的数据格式和loss_mask，本项目暂时支持model_base版本，使用download_model.py下载即可
+最容易上手的0门槛chatglm3项目，将会支持基于langchain的agent调用，注意：  
+1.model_32K版本需要特殊的数据格式和loss_mask，本项目暂时支持model_base版本，使用download_model.py下载即可  
+2.非base版本的agent需要special_token，本项目暂时支持model_base版本的agent调用
+
 
 
 ## 安装依赖
@@ -18,6 +20,9 @@ python finetune.py --dataset_path ./alpaca --lora_rank 8 --per_device_train_batc
 
 ## Inference
 python infer.py output/checkpoint-1000 ./alpaca_data.json 100 
+
+## Agent
+python run.py  
 
 
 ## 感谢
