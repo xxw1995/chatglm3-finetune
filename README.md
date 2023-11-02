@@ -1,5 +1,5 @@
 # chatglm3-finetune
-0门槛的**chatglm3-finetune & agent**项目  
+0门槛的 **chatglm3-finetune & agent** 项目  
 已经支持 **基于langchain的agent调用** & **根据zero_shot的LLM** & **知识库召回知识** 完成 **intent识别**  
   
 **注意**  
