@@ -1,9 +1,9 @@
 # chatglm3-finetune
 最容易上手的0门槛chatglm3项目，已经支持基于langchain的agent调用 & 根据zero_shot的LLM和知识库完成intent识别  
   
-**注意**
-1.model_32K版本需要特殊的数据格式和loss_mask，本项目暂时支持model_base版本，使用download_model.py下载即可  
-2.非base版本的agent需要special_token，本项目暂时支持model_base版本的agent调用  
+**注意**  
+  1.model_32K版本需要特殊的数据格式和loss_mask，本项目暂时支持model_base版本，使用download_model.py下载即可  
+  2.非base版本的agent需要special_token，本项目暂时支持model_base版本的agent调用  
 
 
 
