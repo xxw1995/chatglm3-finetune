@@ -25,7 +25,7 @@ python finetune.py --dataset_path ./alpaca --lora_rank 8 --per_device_train_batc
 python infer.py output/checkpoint-1000 ./alpaca_data.json 100 
 
 ## Agent
-目前支持通过load_model_from_checkpoint()加载微调后的模型充当agent
+目前支持通过load_model_from_checkpoint()加载微调后的模型充当agent  
 python run.py  
 
 
