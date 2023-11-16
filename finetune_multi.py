@@ -89,7 +89,7 @@ def main():
         if k == 'transformer.word_embeddings':
             model.transformer.embedding = model.transformer.embedding.to(f'cuda:{v}')
         if k.find("transformer.layers") != -1:
-                      sub_value = int(k.replace("transformer.layers.", ""))
+            sub_value = int(k.replace("transformer.layers.", ""))
             model.transformer.encoder.layers[sub_value] = model.transformer.encoder.layers[sub_value].to(f'cuda:{v}')
         if k == "transformer.final_layernorm":
             model.transformer.encoder.final_layernorm = model.transformer.encoder.final_layernorm.to(f'cuda:{v}')
