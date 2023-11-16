@@ -1,6 +1,7 @@
 # chatglm3-finetune
 0门槛的 **chatglm3-finetune & agent** 项目  
 已经支持 **基于langchain的agent调用** & **根据zero_shot的LLM** & **知识库召回知识** 完成 **intent识别**  
+11.16更新：已支持多卡 finetune_multi.py
   
 **注意**  
   1.model_32K版本需要特殊的数据格式和loss_mask，本项目暂时支持model_base版本，使用download_model.py下载即可  
