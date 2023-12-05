@@ -14,6 +14,7 @@ from langchain import LLMChain, PromptTemplate
 from langchain.base_language import BaseLanguageModel
 import re, random
 from hashlib import md5
+from utils import test_bge_cos
 
 class APITool(BaseTool):
     name: str = ""
@@ -130,6 +131,34 @@ class Text_classification_Tool(functional_Tool):
     def _call_func(self, query) -> str:
         self.get_llm_chain()
         context = "Instruction: 你是一个非常厉害的[词条名称]多层级分类模型"
+        resp = self.llm_chain.predict(text=context, query=query)
+        return resp
+
+    def get_llm_chain(self):
+        if not self.llm_chain:
+            self.llm_chain = LLMChain(llm=self.llm, prompt=self.prompt)
+
+class Default_Tool(functional_Tool):
+    llm: BaseLanguageModel
+    name = "default"
+    description = "默认对话工具，根据用户输入完成对话"
+
+    qa_template = """
+    请根据下面带```分隔符的文本来回答问题。
+    ```{text}```
+    问题：{query}
+    """
+
+    prompt = PromptTemplate.from_template(qa_template)
+    llm_chain: LLMChain = None
+
+    def _call_func(self, query) -> str:
+        self.get_llm_chain()
+        context = "Instruction: 你是一个聊天机器人，需要根据用户的输入完成聊天任务，你需要根据下面这些背景知识来回答："
+        # 只是库
+        retrive_knowledge = test_bge_cos(query, "/data/npc_data.txt", mode="multi")
+        print("Defaurt_Tool:", retrive_knowledge)
+        context += retrive_knowledge
         resp = self.llm_chain.predict(text=context, query=query)
         return resp
 
