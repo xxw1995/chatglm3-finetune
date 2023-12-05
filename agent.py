@@ -3,7 +3,7 @@ from langchain.schema import AgentAction, AgentFinish
 from langchain.agents import BaseSingleActionAgent
 from langchain import LLMChain, PromptTemplate
 from langchain.base_language import BaseLanguageModel
-from utils import process_data, DFaiss, Dprompt
+from utils import process_data, DFaiss, Dprompt, test_bge_cos
 
 class IntentAgent(BaseSingleActionAgent):
     tools: List
@@ -11,6 +11,7 @@ class IntentAgent(BaseSingleActionAgent):
     intent_template: str = """
     有一些参考资料，为:{docs}
     你的任务是根据「参考资料」来理解用户问题的意图，并判断该问题属于哪一类意图。
+    注意：你输出的意图应该是概率最高的那一个，不能是多个
     用户问题：“{query}”
     """
 
@@ -24,12 +25,18 @@ class IntentAgent(BaseSingleActionAgent):
     def choose_tools(self, query):
         self.get_llm_chain()
         tool_names = [tool.name for tool in self.tools]
+        """
         prompt_model = Dprompt()
         prompt_model.load_data("./doc/")
         docs = prompt_model.answer(query)
-        resp = self.llm_chain.predict(query=query, docs=docs)
-        select_tools = [(name, resp.index(name)) for name in tool_names if name in resp]
-        select_tools.sort(key=lambda x:x[1])
+        """
+        # 知识库
+        retrive_knowledge = test_bge_cos(query, "./doc/doc.txt",  mode="single")
+        resp = self.llm_chain.predict(query=query, docs=retrive_knowledge)
+        #select_tools = [(name, resp.index(name)) for name in tool_names if name in resp]
+        #select_tools = [(name, resp.index(name) if name in resp else 'default') for name in tool_names]
+        select_tools = [(name, resp.index(name)) if name in resp else ('default', 'default') for name in tool_names]
+        select_tools.sort(key=lambda x:len(x[1]))
         candidate_obj = []
         return [x[0] for x in select_tools]
 
