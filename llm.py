@@ -18,6 +18,17 @@ class ChatGLM3(LLM):
     streaming: bool = True
     model: object = None
     tokenizer: object = None
+    """
+    def __init__(self, model_path: str, max_length: int = 8192, temperature: float = 0.1, top_p: float = 0.7, history: List = None, streaming: bool = True):
+        self.model_path = model_path
+        self.max_length = max_length
+        self.temperature = temperature
+        self.top_p = top_p
+        self.history = [] if history is None else history
+        self.streaming = streaming
+        self.model = None
+        self.tokenizer = None
+    """
 
     @property
     def _llm_type(self) -> str:
@@ -53,10 +64,10 @@ class ChatGLM3(LLM):
                     temperature=self.temperature
             )):
               if add_history:
-                    if i == 0:
-                        self.history += [[prompt, resp]]
-                    else:
-                        self.history[-1] = [prompt, resp]
+                if i == 0:
+                    self.history += [[prompt, resp]]
+                else:
+                    self.history[-1] = [prompt, resp]
                 text_callback(resp[index:])
                 index = len(resp)
         else:
@@ -76,7 +87,7 @@ class ChatGLM3(LLM):
         if self.model is not None or self.tokenizer is not None:
             return
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_path, trust_remote_code=True)
-        self.model = AutoModel.from_pretrained(self.model_path, trust_remote_code=True).half().cuda().eval()-
+        self.model = AutoModel.from_pretrained(self.model_path, trust_remote_code=True).half().cuda().eval()
 
     def load_model_from_checkpoint(self, checkpoint=None):
         if self.model is not None or self.tokenizer is not None:
