@@ -25,19 +25,20 @@ class IntentAgent(BaseSingleActionAgent):
     def choose_tools(self, query):
         self.get_llm_chain()
         tool_names = [tool.name for tool in self.tools]
-        """
-        prompt_model = Dprompt()
-        prompt_model.load_data("./doc/")
-        docs = prompt_model.answer(query)
-        """
-        # 知识库
-        retrive_knowledge = test_bge_cos(query, "./doc/doc.txt",  mode="single")
+
+        if len(query) > 512:
+            prompt_model = Dprompt()
+            prompt_model.load_data("./doc/")
+            retrive_knowledge = prompt_model.answer(query)
+        else:
+            # 知识库
+            retrive_knowledge = test_bge_cos(query, "./doc/doc.txt",  mode="single")
+            print("retrive_knowledge:", retrive_knowledge)
         resp = self.llm_chain.predict(query=query, docs=retrive_knowledge)
-        #select_tools = [(name, resp.index(name)) for name in tool_names if name in resp]
-        #select_tools = [(name, resp.index(name) if name in resp else 'default') for name in tool_names]
-        select_tools = [(name, resp.index(name)) if name in resp else ('default', 'default') for name in tool_names]
-        select_tools.sort(key=lambda x:len(x[1]))
-        candidate_obj = []
+        select_tools = [(name, resp.index(name)) for name in tool_names if name in resp]
+        select_tools.sort(key=lambda x:x[1])
+        if len(select_tools) == 0:
+            return ["default"]
         return [x[0] for x in select_tools]
 
     @property
