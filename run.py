@@ -25,5 +25,4 @@ if __name__ == "__main__":
 
     agent = IntentAgent(tools=tools, llm=llm_ori)
     agent_exec = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, max_iterations=1)
-    agent_exec.run("介绍一下胡桃，并模仿胡桃的语气写一首诗")
-    #agent_exec.run("介绍一下胡桃")
+    agent_exec.run("胡桃我想跟你聊天")
