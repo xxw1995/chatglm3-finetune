@@ -81,33 +81,9 @@ class Dprompt:
         emb = self.model.transformer(idx,return_dict=False)[0]
         emb = emb.transpose(0,1)
         emb = emb[:,-1]
-
         if is_numpy:
             emb = emb.detach().cpu().numpy()
-
         return emb
-
-def test_bge():
-    from sentence_transformers import SentenceTransformer
-    import csv
-    queries = ["介绍一下胡桃", "介绍一下纲手", "介绍一下哈利波特"]
-    passages = []
-    data_path = "/data/npc_data.csv"
-    with open(data_path, 'r') as file:
-        csv_reader = csv.reader(file)
-        total_string_list = []
-        for row in csv_reader:
-            row_string = " ".join(row)
-            passages.append(row_string)
-
-    #print("passages:", passages, len(passages))
-
-    instruction = "为这个句子生成表示以用于检索相关文章："
-    model = SentenceTransformer('./models/bge-large-zh') # bge模型路径
-    q_embeddings = model.encode([instruction+q for q in queries], normalize_embeddings=True)
-    p_embeddings = model.encode(passages, normalize_embeddings=True)
-    scores = q_embeddings @ p_embeddings.T
-    print(scores)
 
 def test_bge_cos(query, knowledge_file, mode):
     from sklearn.metrics.pairwise import cosine_similarity
@@ -119,7 +95,7 @@ def test_bge_cos(query, knowledge_file, mode):
         knowledge_list = f.read().split('\n')
 
     # 加载模型
-    model_path = './models/bge-large-zh' # bge模型路径
+    model_path = './bge-large-zh' # bge模型路径
     model_cn = SentenceTransformer(model_path)
 
     knowledge_embeddings = model_cn.encode(knowledge_list, normalize_embeddings=True)
@@ -133,7 +109,7 @@ def test_bge_cos(query, knowledge_file, mode):
     top_indices = np.argsort(-similarities)
     print("top_indices:", top_indices)
 
-    def get_over_string(threshold=0.6):  # 相似度阈值作为参数
+    def get_over_string(threshold=0.7):  # 相似度阈值作为参数
         if mode == "multi" and any(similarity > threshold for similarity in similarities):
             count = 1
             result_list = []
@@ -142,10 +118,10 @@ def test_bge_cos(query, knowledge_file, mode):
                     result_list.append(f"背景知识{count}:{knowledge_list[i]}")
                     count += 1
             return "\n".join(result_list)
-        return "如果用户的问题意图不在参考资料中，则意图返回「default」"
+        return ""
 
     if mode == "single": # 只接受单一返回值 -> 用作意图判断，不接收多意图
         return (knowledge_list[top_indices[0]] if similarities[top_indices[0]] >= 0.6
-                else "如果用户的问题意图不明确，则意图返回「default」")
+                else "")
     elif mode == "multi": # 接受多返回值 -> 用作数据召回
         return get_over_string()
