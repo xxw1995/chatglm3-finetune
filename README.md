@@ -15,10 +15,14 @@ TODO:增加rank功能，去噪音。
 
 
 ## 安装依赖
+conda create -n chatglm3-finetune python=3.11 
 pip3 install -r requirements.txt  
 
 ## 下载模型
 python download_model.py 
+
+## 调整模型为ChatGLM3
+原作者把自己的conda环境，api_key都做了匿名化处理，需要手动设置$model_path="model/ZhipuAI/ChatGLM36b"$
 
 ## 处理数据
 python cover_alpaca2jsonl.py  --data_path ./alpaca_data.json  --save_path ./alpaca_data.jsonl  

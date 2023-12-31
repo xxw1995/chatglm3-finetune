@@ -1,4 +1,4 @@
-from model.modeling_chatglm import ChatGLMForConditionalGeneration
+from model.ZhipuAI.chatglm36b.modeling_chatglm import ChatGLMForConditionalGeneration
 import torch
 from transformers import AutoTokenizer
 from peft import get_peft_model, LoraConfig, TaskType
@@ -10,8 +10,8 @@ import json
 from cover_alpaca2jsonl import format_example
 
 torch.set_default_tensor_type(torch.cuda.HalfTensor)
-model = ChatGLMForConditionalGeneration.from_pretrained("model", trust_remote_code=True, device_map='auto')
-tokenizer = AutoTokenizer.from_pretrained("model", trust_remote_code=True)
+model = ChatGLMForConditionalGeneration.from_pretrained("model/ZhipuAI/chatglm36b", trust_remote_code=True, device_map='auto')
+tokenizer = AutoTokenizer.from_pretrained("model/ZhipuAI/chatglm36b", trust_remote_code=True)
 
 model_dir = sys.argv[1]
 test_file = sys.argv[2]

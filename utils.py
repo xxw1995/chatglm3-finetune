@@ -96,6 +96,7 @@ def test_bge_cos(query, knowledge_file, mode):
 
     # 加载模型
     model_path = './bge-large-zh' # bge模型路径
+    # model_path = "model/ZhipuAI/chatglm36b"
     model_cn = SentenceTransformer(model_path)
 
     knowledge_embeddings = model_cn.encode(knowledge_list, normalize_embeddings=True)

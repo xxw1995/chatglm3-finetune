@@ -17,7 +17,7 @@ def preprocess(tokenizer, config, example, max_seq_length):
     return {"input_ids": input_ids}
 
 def read_jsonl(path, max_seq_length, skip_overlength=False):
-    model_name = "model"
+    model_name = "model/ZhipuAI/chatglm36b"
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         model_name, trust_remote_code=True)
     config = transformers.AutoConfig.from_pretrained(

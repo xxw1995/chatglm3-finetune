@@ -12,7 +12,7 @@ GOOGLE_API_KEY = ""
 GOOGLE_CSE_ID = ""
 
 if __name__ == "__main__":
-    model_path = "./model_base" # 未微调的base模型
+    model_path = "model/ZhipuAI/chatglm36b" # 未微调的base模型
     llm_ori = ChatGLM3(model_path=model_path)
     llm_text_cls = ChatGLM3(model_path=model_path)
 
@@ -25,4 +25,4 @@ if __name__ == "__main__":
 
     agent = IntentAgent(tools=tools, llm=llm_ori)
     agent_exec = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, max_iterations=1)
-    agent_exec.run("胡桃我想跟你聊天")
+    agent_exec.run("你好啊，请问你叫什么名字？")

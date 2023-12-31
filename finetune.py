@@ -5,14 +5,14 @@ from transformers import (
     AutoTokenizer,
     DataCollatorForLanguageModeling,
 )
-from model.modeling_chatglm import ChatGLMForConditionalGeneration
+from model.ZhipuAI.chatglm36b.modeling_chatglm import ChatGLMForConditionalGeneration
 import torch
 from peft import get_peft_model, LoraConfig, TaskType, prepare_model_for_kbit_training
 import datasets
 import os
 from argument import FinetuneArguments, CastOutputToFloat
 
-tokenizer = AutoTokenizer.from_pretrained("model", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("model/ZhipuAI/chatglm36b", trust_remote_code=True)
 data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
 class GLMTrainer(Trainer):
@@ -31,7 +31,7 @@ def main():
     ).parse_args_into_dataclasses()
 
     model = ChatGLMForConditionalGeneration.from_pretrained(
-        "model", load_in_8bit=False, trust_remote_code=True, device_map="auto"
+        "model/ZhipuAI/chatglm36b", load_in_8bit=False, trust_remote_code=True, device_map="auto"
     ).half()
 
     model = prepare_model_for_kbit_training(model)
