@@ -5,6 +5,7 @@
 **注意**  
   1.model_32K版本需要特殊的数据格式和loss_mask，本项目暂时支持model_base版本，使用download_model.py下载即可  
   2.非base版本的agent需要special_token，本项目暂时支持model_base版本的agent调用  
+  3.项目中的bge模型需要自行下载，放在对应的目录即可  
 
 
 ## 更新  
