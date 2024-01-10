@@ -9,13 +9,13 @@
 
 
 ## 更新  
-2024.1.1更新：支持deepspeed多卡训练：python -m torch.distributed.launch --nproc_per_node=2  finetune_deepspeed.py   --dataset_path ./alpaca --lora_rank 8 --per_device_train_batch_size 1 --gradient_accumulation_steps 1 --max_steps 52000 --save_steps 1000 --save_total_limit 20 --learning_rate 1e-4 --remove_unused_columns false --logging_steps 50 --output_dir output  
+**2024.1.1更新**：支持deepspeed多卡训练：python -m torch.distributed.launch --nproc_per_node=2  finetune_deepspeed.py   --dataset_path ./alpaca --lora_rank 8 --per_device_train_batch_size 1 --gradient_accumulation_steps 1 --max_steps 52000 --save_steps 1000 --save_total_limit 20 --learning_rate 1e-4 --remove_unused_columns false --logging_steps 50 --output_dir output  
   
-2023.12.16更新：增加了一种新的调用下游tools的方式（function_map）;在输入文本过长的时候使用LLM做向量召回。当知识库没有召回任何东西的时候，使用对齐后的chat模型生成知识（后续替换为gpt4），再做回答（可以利用下游的tools）。  
+**2023.12.16更新**：增加了一种新的调用下游tools的方式（function_map）;在输入文本过长的时候使用LLM做向量召回。当知识库没有召回任何东西的时候，使用对齐后的chat模型生成知识（后续替换为gpt4），再做回答（可以利用下游的tools）。  
   
-2023.12.5更新：支持bge进行知识库的知识召回，在agent模块中的意图识别bge使用single模式（不支持多意图）、辅助LLM做生成的bge使用multi模式（多条知识召回）  
+**2023.12.5更新**：支持bge进行知识库的知识召回，在agent模块中的意图识别bge使用single模式（不支持多意图）、辅助LLM做生成的bge使用multi模式（多条知识召回）  
   
-2023.11.16更新：已支持多卡 finetune_multi.py  
+**2023.11.16更新**：已支持多卡 finetune_multi.py  
   
 
 
